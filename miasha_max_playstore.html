@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Miasha Max - Download</title>
+  <meta name="description" content="Miasha Max landing page styled like a Play Store app page." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --line: #e8eaed;
+      --green: #0f9d58;
+      --green-dark: #0b8043;
+      --pill: #f1f3f4;
+      --star: #01875f;
+      --shadow: 0 1px 2px rgba(60,64,67,.15), 0 1px 3px 1px rgba(60,64,67,.1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hamburger, .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .hamburger:hover, .avatar:hover { background: #f6f8fc; }
+
+    .searchbar {
+      flex: 1;
+      min-height: 48px;
+      border-radius: 999px;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      gap: 12px;
+    }
+
+    .search-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .search-left span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .avatar {
+      background: #d7f8d7;
+      color: #1e8e3e;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 56px;
+    }
+
+    .app-header {
+      display: grid;
+      grid-template-columns: 128px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .app-icon {
+      width: 128px;
+      height: 128px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      object-fit: cover;
+      background: #f8f9fa;
+    }
+
+    .app-meta h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -.2px;
+    }
+
+    .developer {
+      margin-top: 8px;
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .badge-line {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contains-ads {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      background: var(--pill);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .stats {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 0 10px;
+      position: relative;
+    }
+
+    .stat:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 8px;
+      width: 1px;
+      height: 32px;
+      background: var(--line);
+    }
+
+    .stat-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .stat-bottom {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn, .secondary-btn {
+      height: 48px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 0 28px;
+      transition: .2s ease;
+    }
+
+    .primary-btn {
+      background: var(--green);
+      color: white;
+      min-width: 180px;
+      box-shadow: 0 1px 2px rgba(15,157,88,.25);
+    }
+
+    .primary-btn:hover { background: var(--green-dark); }
+
+    .secondary-btn {
+      border: 1px solid var(--line);
+      color: var(--green);
+      background: white;
+    }
+
+    .secondary-btn:hover { background: #f8fbf8; }
+
+    .notice {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .section {
+      margin-top: 34px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      background: white;
+    }
+
+    .screens-row {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 220px;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .screens-row::-webkit-scrollbar { height: 8px; }
+    .screens-row::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 999px; }
+
+    .screen {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 1px 1px rgba(0,0,0,.03);
+      scroll-snap-align: start;
+    }
+
+    .screen img {
+      width: 100%;
+      aspect-ratio: 9 / 19.5;
+      object-fit: cover;
+      background: #f8f9fa;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: white;
+    }
+
+    .about-text {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .safety-grid {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .shield {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      color: var(--green);
+    }
+
+    .footer-space {
+      height: 36px;
+    }
+
+    @media (max-width: 900px) {
+      .app-meta h1 { font-size: 30px; }
+      .stats { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner { padding: 10px 12px; }
+      .page { padding: 16px 12px 44px; }
+      .app-header {
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 14px;
+      }
+      .app-icon {
+        width: 88px;
+        height: 88px;
+        border-radius: 22px;
+      }
+      .app-meta h1 {
+        font-size: 28px;
+        line-height: 1.12;
+      }
+      .developer { font-size: 14px; }
+      .badge-line { font-size: 13px; }
+      .stats {
+        margin-top: 18px;
+        padding-bottom: 16px;
+      }
+      .stat {
+        padding: 0 6px;
+      }
+      .stat-top {
+        font-size: 14px;
+        justify-content: center;
+      }
+      .stat-bottom {
+        font-size: 11px;
+      }
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .primary-btn, .secondary-btn {
+        width: 100%;
+      }
+      .screens-row {
+        grid-auto-columns: 160px;
+        gap: 10px;
+      }
+      .section { margin-top: 28px; }
+      .section-head h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="hamburger" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#5f6368" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="searchbar" aria-label="Search bar visual only">
+        <div class="search-left">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35M10.8 18a7.2 7.2 0 1 0 0-14.4 7.2 7.2 0 0 0 0 14.4Z" stroke="#5f6368" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Search apps &amp; games</span>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 6v12M6 12h12" stroke="#5f6368" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="avatar">M</div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="app-header">
+      <img class="app-icon" src="https://i.postimg.cc/Jzv573M0/iconlogo.png" alt="Miasha Max logo">
+
+      <div class="app-meta">
+        <h1>Miasha Max</h1>
+        <div class="developer">Miasha Max Entertainment</div>
+        <div class="badge-line">
+          <span>Burudani, TV na Michezo</span>
+          <span>•</span>
+          <span class="contains-ads">Contains ads</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-top">4.8
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3.5l2.63 5.33 5.87.85-4.25 4.14 1 5.84L12 17.1l-5.25 2.76 1-5.84L3.5 9.68l5.87-.85L12 3.5Z" fill="#01875f"/></svg>
+            </div>
+            <div class="stat-bottom">32K reviews</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top">500K+</div>
+            <div class="stat-bottom">Downloads</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top">Rated 12+</div>
+            <div class="stat-bottom">12 years and up</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top">★ Editor's pick</div>
+            <div class="stat-bottom">Streaming app</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="primary-btn" href="#download" download>Download</a>
+          <a class="secondary-btn" href="#screenshots">Preview</a>
+        </div>
+
+        <div class="notice">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4 7-10V5l-7-2-7 2v6c0 6 7 10 7 10Z" stroke="#5f6368" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          Verified-style layout for mobile and desktop display
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="screenshots">
+      <div class="section-head">
+        <h2>Screenshots</h2>
+        <span class="arrow">›</span>
+      </div>
+      <div class="screens-row" aria-label="App screenshots">
+        <div class="screen"><img src="https://i.postimg.cc/5tmyK17y/Screenshot_20260312_230032.png" alt="Miasha Max screenshot 1"></div>
+        <div class="screen"><img src="https://i.postimg.cc/52dtxjDL/Screenshot_20260313_121935.png" alt="Miasha Max screenshot 2"></div>
+        <div class="screen"><img src="https://i.postimg.cc/RFVFj8yb/Screenshot_20260313_122907.png" alt="Miasha Max screenshot 3"></div>
+        <div class="screen"><img src="https://i.postimg.cc/yYSd40p7/Screenshot_20260313_121954.png" alt="Miasha Max screenshot 4"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>About this app</h2>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card">
+        <p class="about-text">
+          Miasha Max lets users enjoy live TV, sports coverage, movies, series, and entertainment content in one clean app experience. This page has been rebuilt to closely match the familiar Play Store app-detail layout while keeping the button text as <strong>Download</strong>.
+        </p>
+        <div class="chips" style="margin-top:16px;">
+          <span class="chip">Live TV</span>
+          <span class="chip">Sports</span>
+          <span class="chip">Movies</span>
+          <span class="chip">Mobile friendly</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Data safety</h2>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card safety-grid">
+        <svg class="shield" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4 7-10V5l-7-2-7 2v6c0 6 7 10 7 10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <div>
+          Safety section styled to resemble a store listing. You can replace this text later with your exact privacy, account, and permissions wording.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="section-head">
+        <h2>Ready to download?</h2>
+      </div>
+      <div class="card">
+        <p class="about-text" style="margin-top:0; margin-bottom:16px;">
+          Keep your current APK link here and users will see a familiar app-store-style presentation on both phones and larger screens.
+        </p>
+        <a class="primary-btn" href="#download" download>Download</a>
+      </div>
+    </section>
+
+    <div class="footer-space"></div>
+  </main>
+</body>
+</html>
