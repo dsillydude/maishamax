@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Miasha Max - Download</title>
-  <meta name="description" content="Miasha Max landing page styled like a Play Store app page." />
+  <meta name="description" content="Pakua Miasha Max kwa haraka. Burudani, TV na michezo katika app moja." />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #ffffff;
@@ -20,6 +22,9 @@
       --pill: #f1f3f4;
       --star: #01875f;
       --shadow: 0 1px 2px rgba(60,64,67,.15), 0 1px 3px 1px rgba(60,64,67,.1);
+      --bg-dark: #0d1117;
+      --overlay-text: #f5f7fa;
+      --overlay-muted: #a9b1bb;
     }
 
     * { box-sizing: border-box; }
@@ -35,6 +40,122 @@
 
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+
+    /* SPLASH / AUTO-DOWNLOAD OVERLAY */
+    .download-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at center, rgba(15,157,88,.18) 0%, rgba(15,157,88,.06) 22%, rgba(13,17,23,.97) 58%, rgba(8,10,12,1) 100%),
+        linear-gradient(180deg, #0e1116, #07090c);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+
+    .download-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .overlay-card {
+      width: min(100%, 420px);
+      text-align: center;
+      color: var(--overlay-text);
+    }
+
+    .overlay-logo {
+      width: 84px;
+      height: 84px;
+      border-radius: 24px;
+      margin: 0 auto 16px;
+      box-shadow: 0 18px 60px rgba(15,157,88,.18);
+      object-fit: cover;
+      background: rgba(255,255,255,.05);
+    }
+
+    .overlay-title {
+      margin: 0;
+      font-size: 40px;
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -.4px;
+    }
+
+    .overlay-subtitle {
+      margin: 8px 0 0;
+      color: var(--overlay-muted);
+      font-size: 16px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .loader {
+      width: 52px;
+      height: 52px;
+      margin: 28px auto 18px;
+      border-radius: 999px;
+      border: 3px solid rgba(255,255,255,.12);
+      border-top-color: #58d68d;
+      animation: spin .9s linear infinite;
+    }
+
+    .overlay-status {
+      margin: 0 0 16px;
+      color: #d7dee6;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .overlay-actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .overlay-btn,
+    .overlay-secondary {
+      min-height: 52px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .overlay-btn {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 8px 26px rgba(15,157,88,.25);
+    }
+
+    .overlay-btn:hover { background: var(--green-dark); }
+
+    .overlay-secondary {
+      border: 1px solid rgba(255,255,255,.12);
+      color: #d5dde6;
+      background: rgba(255,255,255,.04);
+    }
+
+    .overlay-note {
+      margin-top: 14px;
+      color: #95a0ab;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
     .topbar {
       position: sticky;
@@ -188,6 +309,8 @@
       font-size: 15px;
       font-weight: 500;
       color: var(--text);
+      justify-content: center;
+      text-align: center;
     }
 
     .stat-bottom {
@@ -214,6 +337,7 @@
       font-weight: 500;
       padding: 0 28px;
       transition: .2s ease;
+      cursor: pointer;
     }
 
     .primary-btn {
@@ -355,54 +479,93 @@
     }
 
     @media (max-width: 640px) {
+      .overlay-title { font-size: 34px; }
+      .overlay-subtitle { font-size: 14px; }
+
       .topbar-inner { padding: 10px 12px; }
       .page { padding: 16px 12px 44px; }
+
       .app-header {
         grid-template-columns: 88px minmax(0, 1fr);
         gap: 14px;
       }
+
       .app-icon {
         width: 88px;
         height: 88px;
         border-radius: 22px;
       }
+
       .app-meta h1 {
         font-size: 28px;
         line-height: 1.12;
       }
+
       .developer { font-size: 14px; }
       .badge-line { font-size: 13px; }
+
       .stats {
         margin-top: 18px;
         padding-bottom: 16px;
       }
+
       .stat {
         padding: 0 6px;
       }
+
       .stat-top {
         font-size: 14px;
-        justify-content: center;
       }
+
       .stat-bottom {
         font-size: 11px;
       }
+
       .actions {
         display: grid;
         grid-template-columns: 1fr;
       }
+
       .primary-btn, .secondary-btn {
         width: 100%;
       }
+
       .screens-row {
         grid-auto-columns: 160px;
         gap: 10px;
       }
+
       .section { margin-top: 28px; }
       .section-head h2 { font-size: 20px; }
     }
   </style>
 </head>
 <body>
+
+  <div class="download-overlay" id="downloadOverlay">
+    <div class="overlay-card">
+      <img class="overlay-logo" src="https://i.postimg.cc/Jzv573M0/iconlogo.png" alt="Miasha Max logo">
+      <h2 class="overlay-title">Miasha Max</h2>
+      <p class="overlay-subtitle">TV • Sports • Movies</p>
+
+      <div class="loader"></div>
+      <p class="overlay-status" id="overlayStatus">Inaandaa download yako...</p>
+
+      <div class="overlay-actions">
+        <a class="overlay-btn" id="overlayDownloadBtn" href="https://pub-a3b7379c5295446d8530cfef6cb27b6c.r2.dev/MaishaMax.apk">
+          Download APK
+        </a>
+        <a class="overlay-secondary" href="#main-content" id="stayOnSiteBtn">
+          Baki kwenye website
+        </a>
+      </div>
+
+      <p class="overlay-note">
+        Kama download haijaanza moja kwa moja, bonyeza “Download APK”.
+      </p>
+    </div>
+  </div>
+
   <header class="topbar">
     <div class="topbar-inner">
       <div class="hamburger" aria-hidden="true">
@@ -419,13 +582,14 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <section class="app-header">
       <img class="app-icon" src="https://i.postimg.cc/Jzv573M0/iconlogo.png" alt="Miasha Max logo">
 
       <div class="app-meta">
         <h1>Miasha Max</h1>
         <div class="developer">Miasha Max Entertainment</div>
+
         <div class="badge-line">
           <span>Burudani, TV na Michezo</span>
           <span>•</span>
@@ -439,14 +603,17 @@
             </div>
             <div class="stat-bottom">32K reviews</div>
           </div>
+
           <div class="stat">
             <div class="stat-top">500K+</div>
             <div class="stat-bottom">Downloads</div>
           </div>
+
           <div class="stat">
             <div class="stat-top">Rated 12+</div>
             <div class="stat-bottom">12 years and up</div>
           </div>
+
           <div class="stat">
             <div class="stat-top">★ Editor's pick</div>
             <div class="stat-bottom">Streaming app</div>
@@ -454,13 +621,15 @@
         </div>
 
         <div class="actions">
-          <a class="primary-btn" href="https://pub-a3b7379c5295446d8530cfef6cb27b6c.r2.dev/MaishaMax.apk" download>Download</a>
+          <a class="primary-btn js-download-btn" href="https://pub-a3b7379c5295446d8530cfef6cb27b6c.r2.dev/MaishaMax.apk">
+            Download
+          </a>
           <a class="secondary-btn" href="#screenshots">Preview</a>
         </div>
 
         <div class="notice">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4 7-10V5l-7-2-7 2v6c0 6 7 10 7 10Z" stroke="#5f6368" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          Verified-style layout for mobile and desktop display
+          Download ya Android imeboreshwa ili ianze haraka zaidi.
         </div>
       </div>
     </section>
@@ -470,6 +639,7 @@
         <h2>Screenshots</h2>
         <span class="arrow">›</span>
       </div>
+
       <div class="screens-row" aria-label="App screenshots">
         <div class="screen"><img src="https://i.postimg.cc/5tmyK17y/Screenshot_20260312_230032.png" alt="Miasha Max screenshot 1"></div>
         <div class="screen"><img src="https://i.postimg.cc/52dtxjDL/Screenshot_20260313_121935.png" alt="Miasha Max screenshot 2"></div>
@@ -483,10 +653,12 @@
         <h2>About this app</h2>
         <span class="arrow">›</span>
       </div>
+
       <div class="card">
         <p class="about-text">
-          Miasha Max lets users enjoy live TV, sports coverage, movies, series, and entertainment content in one clean app experience. This page has been rebuilt to closely match the familiar Play Store app-detail layout while keeping the button text as <strong>Download</strong>.
+          Miasha Max hukuwezesha kutazama live TV, michezo, movies, series na burudani nyingine zote ndani ya app moja safi na rahisi kutumia. Muonekano huu umejengwa kufanana na ukurasa wa Play Store, lakini umeboreshwa kwa APK direct download ili watu wafikie app kwa hatua chache iwezekanavyo.
         </p>
+
         <div class="chips" style="margin-top:16px;">
           <span class="chip">Live TV</span>
           <span class="chip">Sports</span>
@@ -501,10 +673,11 @@
         <h2>Data safety</h2>
         <span class="arrow">›</span>
       </div>
+
       <div class="card safety-grid">
         <svg class="shield" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4 7-10V5l-7-2-7 2v6c0 6 7 10 7 10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         <div>
-          Safety section styled to resemble a store listing. You can replace this text later with your exact privacy, account, and permissions wording.
+          Sehemu hii imewekwa kwa mtindo unaofanana na store listing. Unaweza kubadilisha maandishi haya baadaye kwa privacy policy, account info, na permissions zako halisi.
         </div>
       </div>
     </section>
@@ -513,15 +686,91 @@
       <div class="section-head">
         <h2>Ready to download?</h2>
       </div>
+
       <div class="card">
         <p class="about-text" style="margin-top:0; margin-bottom:16px;">
-          Keep your current APK link here and users will see a familiar app-store-style presentation on both phones and larger screens.
+          Bonyeza kitufe hapa chini kuanza kupakua APK moja kwa moja. Kama browser yako itazuia auto-download, utapelekwa kwenye link ya file ili uanze kupakua kwa hatua moja tu.
         </p>
-        <a class="primary-btn" href="#download" download>Download</a>
+
+        <a class="primary-btn js-download-btn" href="https://pub-a3b7379c5295446d8530cfef6cb27b6c.r2.dev/MaishaMax.apk">
+          Download APK
+        </a>
       </div>
     </section>
 
     <div class="footer-space"></div>
   </main>
+
+  <script>
+    (function () {
+      const APK_URL = "https://pub-a3b7379c5295446d8530cfef6cb27b6c.r2.dev/MaishaMax.apk";
+      const LANDING_URL = window.location.origin + window.location.pathname + "?no_redirect=1";
+      const params = new URLSearchParams(window.location.search);
+      const noRedirect = params.get("no_redirect") === "1";
+
+      const ua = navigator.userAgent || "";
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isInstagram = /Instagram/i.test(ua);
+      const isFacebook = /FBAN|FBAV/i.test(ua);
+
+      const overlay = document.getElementById("downloadOverlay");
+      const overlayStatus = document.getElementById("overlayStatus");
+      const overlayDownloadBtn = document.getElementById("overlayDownloadBtn");
+      const stayOnSiteBtn = document.getElementById("stayOnSiteBtn");
+      const allDownloadBtns = document.querySelectorAll(".js-download-btn");
+
+      overlayDownloadBtn.href = APK_URL;
+      allDownloadBtns.forEach(btn => btn.href = APK_URL);
+
+      function hideOverlay() {
+        overlay.classList.add("hidden");
+      }
+
+      function startDownload() {
+        window.location.href = APK_URL;
+      }
+
+      stayOnSiteBtn.addEventListener("click", function () {
+        hideOverlay();
+      });
+
+      allDownloadBtns.forEach(btn => {
+        btn.addEventListener("click", function () {
+          if (!isAndroid) return;
+          setTimeout(startDownload, 80);
+        });
+      });
+
+      if (noRedirect) {
+        hideOverlay();
+        return;
+      }
+
+      if (isAndroid) {
+        overlayStatus.textContent = "Inaandaa APK yako...";
+        let delay = 650;
+
+        if (isInstagram || isFacebook) {
+          delay = 900;
+        }
+
+        setTimeout(startDownload, delay);
+        setTimeout(hideOverlay, 2600);
+        return;
+      }
+
+      if (isIOS) {
+        overlayStatus.textContent = "APK hii ni ya Android pekee. Unaweza kuendelea kuona website hii.";
+        overlayDownloadBtn.textContent = "Open website";
+        overlayDownloadBtn.href = LANDING_URL;
+        return;
+      }
+
+      overlayStatus.textContent = "Fungua ukurasa huu kwenye simu ya Android ili kupakua APK.";
+      overlayDownloadBtn.textContent = "Continue to website";
+      overlayDownloadBtn.href = LANDING_URL;
+    })();
+  </script>
 </body>
 </html>
